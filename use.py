@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 from train import block_size, tokenizer,model
+import re
 
 checkPointPath = "./checkpoints/CLLM-I{id}-S{step}.pth"
 
@@ -10,7 +11,6 @@ model.load_state_dict(checkpoint["model_state_dict"])
 def generate(prompt:str):
 
     model.eval()
-    prompt = "<user> " + prompt + "<assistant> "
 
     idx = torch.tensor(
         tokenizer.encode(prompt).ids,
@@ -40,6 +40,19 @@ def generate(prompt:str):
                 break
     result = tokenizer.decode(idx[0].tolist(),skip_special_tokens=False)
 
-    print(result)
+    matches = re.findall(r"<assistant>(.*?)<user>", result, re.DOTALL)
 
-generate("Hello, how are you?")
+    response = matches[-1].strip()
+    
+    return result,response
+
+prompt ="<user> " +  input("User: ")+ "<assistant> "
+
+while True:
+    coversation , response = generate(prompt)
+    print("Assistant:", response)
+    prompt = coversation +  input("User: ") + "<assistant> "
+    if re.findall(r"\\exit", prompt, re.IGNORECASE):
+        break
+
+print("Full Conversation:", coversation)

@@ -13,7 +13,6 @@ print(f"device is { device}")
 tokenizer_path =r"./tokenization/dialogtokens.json"
 ds_train_path = r"./dataset/dailyDialogCleand.txt"
 ds_validation_path = r"./dataset/dailyDialogCleandValidation.txt"
-ds_test_path = r"./dataset/dailyDialogCleandTest.txt"
 checkPointPath = "./checkpoints/CLLM-I{id}-S{step}.pth"
 
 block_size = 128
