@@ -9,7 +9,7 @@ tokenizer.pre_tokenizer = Whitespace()
 
 trainer = BpeTrainer(special_tokens=["<UNK>", "<user>", "<assistant>"])
 
-tokenizer.train([r"C:\Users\USER\programming\pytorch\transformers_practice\diaogLLM\dailyDialogCleand.txt"],trainer)
+tokenizer.train([r"./dataset/dailyDialogCleand.txt"],trainer)
 tokenizer.save("./dialogtokenizer.json")
 
 tokenizer = Tokenizer.from_file("./dialogtokenizer.json")
